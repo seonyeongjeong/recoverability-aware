@@ -1,0 +1,12 @@
+.venv/
+.pdf-reader-env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mpl-cache/
+artifacts/
+data/*.npz
+models/*.pt
+*.egg-info/
+*.pdf
+*.code-workspace

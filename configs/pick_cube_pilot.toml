@@ -1,0 +1,86 @@
+[environment]
+env_id = "PickCube-v1"
+obs_mode = "state_dict"
+control_mode = "pd_ee_delta_pos"
+sim_backend = "physx_cpu"
+max_episode_steps = 60
+seed = 17
+
+[controller]
+max_translation_action = 0.65
+position_action_scale_m = 0.10
+position_tolerance = 0.018
+hover_height = 0.080
+grasp_offset = 0.005
+close_steps = 6
+grasp_confirmation_steps = 3
+recovery_retreat_steps = 8
+
+[collection]
+episodes = 18
+checkpoint_start = 6
+checkpoint_interval = 6
+max_checkpoints_per_episode = 6
+counterfactual_repeats = 1
+rollout_action_noise = 0.02
+rollout_horizon = 60
+fallback_recovery_interval = 0
+remaining_budgets = [0, 1, 2]
+perturbation_probability = 0.95
+
+[[collection.perturbations]]
+kind = "action_noise"
+weight = 0.25
+magnitude = 0.75
+duration = 12
+start_step_min = 10
+start_step_max = 18
+
+[[collection.perturbations]]
+kind = "action_dropout"
+weight = 0.15
+magnitude = 1.0
+duration = 18
+start_step_min = 14
+start_step_max = 22
+
+[[collection.perturbations]]
+kind = "gripper_release"
+weight = 0.25
+magnitude = 1.0
+duration = 4
+start_step_min = 14
+start_step_max = 24
+
+[[collection.perturbations]]
+kind = "object_shift"
+weight = 0.35
+magnitude = 0.10
+duration = 1
+start_step_min = 12
+start_step_max = 24
+
+[costs]
+step = 1.0
+recovery = 8.0
+reset = 20.0
+recovery_budget = 1
+reset_budget = 2
+
+[training]
+hidden_sizes = [128, 128]
+batch_size = 256
+epochs = 30
+learning_rate = 0.001
+weight_decay = 0.0001
+cost_loss_weight = 0.25
+validation_fraction = 0.20
+test_fraction = 0.20
+seed = 17
+
+[decision]
+cost_weight = 0.015
+decision_interval = 5
+risk_threshold = 0.45
+evaluation_episodes = 12
+initial_budget = 2

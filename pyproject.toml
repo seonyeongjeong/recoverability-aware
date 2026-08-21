@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recoverability-aware"
+version = "0.1.0"
+description = "Recoverability-aware intervention experiments for ManiSkill PickCube"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26,<3",
+  "torch>=2.2",
+  "gymnasium>=0.29",
+  "mani-skill>=3.0.0,<4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+research = ["matplotlib>=3.8"]
+
+[project.scripts]
+recoverability = "recoverability.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
